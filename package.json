@@ -1,0 +1,24 @@
+{
+  "name": "asolide",
+  "version": "1.0.0",
+  "description": "Simple IDE for demonstration",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.13.2",
+    "express": "^4.13.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ishikuro/asolide.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ishikuro/asolide/issues"
+  },
+  "homepage": "https://github.com/ishikuro/asolide#readme"
+}
