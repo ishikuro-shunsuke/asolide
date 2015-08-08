@@ -15,15 +15,37 @@
           <h1> ASOLIDE</h1>
           <textarea class="form-control" rows="10" id="text" name="text"  value="" ></textarea>
           <button type="button" class="btn btn-primary btn-lg btn-block" id="button">送信</button>
+          <textarea class="form-control" id="log" rows="20" disabled></textarea>
         </div>
         <div class="col-md-4"></div>
       </div>
     </div>
 
+    <script src="vendors/socket.io-client/socket.io.js"></script>
     <script src="vendors/jquery/dist/jquery.min.js"></script>
     <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <script>
 $(function(){
+  var socket = io();
+  socket.on('system', function (msg) {
+    if (msg === 'Compiling') {
+      $('#button').removeClass('btn-primary');
+      $('#button').addClass('btn-danger');
+      $('#button').val('再送信');
+    } else if (msg === 'Finished') {
+      $('#button').removeClass('btn-danger');
+      $('#button').addClass('btn-primary');
+      $('#button').val('送信');
+    }
+    $('#log').append(msg + '\n');
+  });
+  socket.on('stdout', function (msg) {
+    $('#log').append(msg + '\n');
+  });
+  socket.on('stderr', function (msg) {
+    $('#log').append(msg + '\n');
+  });
+
   $('#button').click(function(){
     $.ajax({
             url: 'http://localhost:3000/exec',
