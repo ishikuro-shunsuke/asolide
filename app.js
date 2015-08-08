@@ -6,7 +6,7 @@ var spawn = require('child_process').spawn;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.get('/', express.static(__dirname + '/views'));
+app.use(express.static(__dirname + '/views'));
 
 app.post('/exec', function (req, res) {
   var header = '#include "../resources/DE2_115.nsh"\n';

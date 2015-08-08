@@ -4,11 +4,49 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Asolide</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <title>test</title>
+    <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
   </head>
   <body>
-    <h1>Asolide</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <h1> ASOLIDE</h1>
+          <textarea class="form-control" rows="10" id="text" name="text"  value="" ></textarea>
+          <button type="button" class="btn btn-primary btn-lg btn-block" id=" button">送信</button>
+        </div>
+        <div class="col-md-4"></div>
+      </div>
+    </div>
+
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+    <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script>
+$(function(){
+  $('#button').click(function(){
+    $.ajax({
+            url: 'http://localhost:3000/exec',
+            type: 'post',
+            data: {
+                text: $('#text').val()
+            },
+            timeout: 10000,
+            size: 10000,
+            dataType: 'text'
+        })
+        .done(function( data ) {
+            // 通信が成功したときの処理
+        })
+        .fail(function( data ) {
+            // 通信が失敗したときの処理
+        })
+        .always(function( data ) {
+            // 通信が完了したとき
+        });
+    });
+});
+console.log( $('#text').val());  
+    </script>
   </body>
 </html>
