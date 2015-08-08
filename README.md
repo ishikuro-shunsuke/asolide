@@ -16,7 +16,7 @@ Simple IDE for demonstration
 $ git clone https://github.com/ishikuro/asolide.git
 $ npm install
 $ bower install
-$ cp /path/to/mkproj-DE2_115.tcl workspace/
+$ cp /path/to/mkproj-DE2_115.tcl resources/
 $ node app.js
 ```
 
