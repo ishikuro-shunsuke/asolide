@@ -3,12 +3,20 @@ var app = express();
 var bodyParser = require('body-parser');
 var fs = require('fs');
 var spawn = require('child_process').spawn;
+var compile = {};
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static(__dirname + '/views'));
 
 app.post('/exec', function (req, res) {
+  if (compile.kill) {
+    console.log('Recompiling...')
+    compile.kill('SIGINT');
+  } else {
+    console.log('Compiling...')
+  }
+
   var header = '#include "../resources/DE2_115.nsh"\n';
   var source = header + req.body.source;
   fs.writeFile('workspace/DE2_115.nsl', source, function (err) {
@@ -16,7 +24,7 @@ app.post('/exec', function (req, res) {
       console.log(err);
     }
 
-    var compile = spawn('bash', ['./resources/ide.sh']);
+    compile = spawn('bash', ['./resources/ide.sh']);
     compile.stdout.on('data', function (data) {
       console.log(data.toString());
     });
@@ -24,6 +32,7 @@ app.post('/exec', function (req, res) {
       console.log(data.toString());
     });
     compile.on('close', function() {
+      console.log('Finished.');
       res.send('finished');
     });
   });
