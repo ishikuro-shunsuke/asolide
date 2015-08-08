@@ -16,7 +16,7 @@ app.post('/exec', function (req, res) {
       console.log(err);
     }
 
-    var compile = spawn('/path/to/script/compile.sh');
+    var compile = spawn('bash', ['./resources/ide.sh']);
     compile.stdout.on('data', function (data) {
       console.log(data.toString());
     });
