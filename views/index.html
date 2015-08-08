@@ -30,7 +30,7 @@
 $(function(){
   var editor = ace.edit("editor");
   editor.setTheme("ace/theme/monokai");
-  editor.getSession().setMode("ace/mode/c_cpp");
+  editor.getSession().setMode("ace/mode/verilog");
   var socket = io();
   socket.on('system', function (msg) {
     if (msg === 'Compiling') {
