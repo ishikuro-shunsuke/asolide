@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>test</title>
+    <title>ASOLIDE</title>
     <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
   </head>
   <body>
@@ -12,20 +12,23 @@
       <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4">
-          <h1> ASOLIDE</h1>
-          <textarea class="form-control" rows="10" id="text" name="text"  value="" ></textarea>
+          <h1>ASOLIDE</h1>
+          <div id="editor" style="height: 300px;"></div>
           <button type="button" class="btn btn-primary btn-lg btn-block" id="button">送信</button>
           <textarea class="form-control" id="log" rows="20" disabled></textarea>
         </div>
         <div class="col-md-4"></div>
       </div>
     </div>
-
     <script src="vendors/socket.io-client/socket.io.js"></script>
     <script src="vendors/jquery/dist/jquery.min.js"></script>
     <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="vendors/ace-builds/src-min/ace.js"></script>
     <script>
 $(function(){
+  var editor = ace.edit("editor");
+  editor.setTheme("ace/theme/monokai");
+  editor.getSession().setMode("ace/mode/c_cpp");
   var socket = io();
   socket.on('system', function (msg) {
     if (msg === 'Compiling') {
@@ -45,13 +48,12 @@ $(function(){
   socket.on('stderr', function (msg) {
     $('#log').append(msg + '\n');
   });
-
   $('#button').click(function(){
     $.ajax({
             url: 'http://localhost:3000/exec',
             type: 'post',
             data: {
-                source: $('#text').val()
+                source: editor.getValue()
             },
             timeout: 10000,
             size: 10000,

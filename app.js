@@ -20,6 +20,7 @@ app.post('/exec', function (req, res) {
 
   var header = '#include "../resources/DE2_115.nsh"\n';
   var source = header + req.body.source;
+  console.log(source);
   fs.writeFile('workspace/DE2_115.nsl', source, function (err) {
     if (err) {
       console.log(err);
