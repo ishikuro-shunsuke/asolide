@@ -10,16 +10,24 @@
   <body>
     <div class="container">
       <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
           <h1>ASOLIDE</h1>
-          <div id="editor" style="height: 300px;"></div>
+          <div id="editor" style="height: 200px;">module DE2_115 {
+    reg out[5];
+
+    if (___ == _) {                    // KEYを押しているときに入力
+        out __ GPIO[4:0] _ GPIO[9:5];  // AとBを足す
+    } else {                           // KEYを離したときに出力する
+        GPIO = { 21'b0, ___, 10'b0 };
+    }
+}</div>
           <button type="button" class="btn btn-primary btn-lg btn-block" id="button" data-toggle="collapse" data-target="#log" aria-expanded="false" aria-controls="log">
             <span class="glyphicon glyphicon-play" id="icon"></span>
           </button>
           <textarea class="form-control collapse" id="log" rows="10" disabled></textarea>
         </div>
-        <div class="col-md-4"></div>
+        <div class="col-md-3"></div>
       </div>
     </div>
     <script src="vendors/socket.io-client/socket.io.js"></script>
@@ -39,11 +47,13 @@ $(function(){
       $('#button').addClass('btn-danger');
       $('#icon').removeClass('glyphicon-play');
       $('#icon').addClass('glyphicon-refresh');
+      $('#log').css('background-color', '');
     } else if (msg === 'Finished') {
       $('#button').removeClass('btn-danger');
       $('#button').addClass('btn-primary');
       $('#icon').removeClass('glyphicon-refresh');
       $('#icon').addClass('glyphicon-play');
+      $('#log').css('background-color', '#d9edf7');
     }
     $('#log').append(msg + '\n');
     $('#log').scrollTop($('#log')[0].scrollHeight);
@@ -51,7 +61,7 @@ $(function(){
   socket.on('stdout', function (msg) {
     $('#log').append(msg + '\n');
     $('#log').scrollTop($('#log')[0].scrollHeight);
-    $('#log').css('background-color', '#d9edf7');
+    $('#log').css('background-color', '');
   });
   socket.on('stderr', function (msg) {
     $('#log').append(msg + '\n');
@@ -60,25 +70,23 @@ $(function(){
   });
   $('#button').click(function(){
     $.ajax({
-            url: 'http://localhost:3000/exec',
-            type: 'post',
-            data: {
-                source: editor.getValue()
-            },
-            timeout: 10000,
-            size: 10000,
-            dataType: 'text'
-        })
-        .done(function( data ) {
-            // 通信が成功したときの処理
-        })
-        .fail(function( data ) {
-            // 通信が失敗したときの処理
-        })
-        .always(function( data ) {
-            // 通信が完了したとき
-        });
+      url: 'http://localhost:3000/exec',
+      type: 'post',
+      data: { source: editor.getValue() },
+      timeout: 10000,
+      size: 10000,
+      dataType: 'text'
+    })
+    .done(function( data ) {
+      // 通信が成功したときの処理
+    })
+    .fail(function( data ) {
+      // 通信が失敗したときの処理
+    })
+    .always(function( data ) {
+      // 通信が完了したとき
     });
+  });
 });
     </script>
   </body>
