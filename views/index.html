@@ -46,13 +46,16 @@ $(function(){
       $('#icon').addClass('glyphicon-play');
     }
     $('#log').append(msg + '\n');
+    $('#log').scrollTop($('#log')[0].scrollHeight);
   });
   socket.on('stdout', function (msg) {
     $('#log').append(msg + '\n');
+    $('#log').scrollTop($('#log')[0].scrollHeight);
     $('#log').css('background-color', '#d9edf7');
   });
   socket.on('stderr', function (msg) {
     $('#log').append(msg + '\n');
+    $('#log').scrollTop($('#log')[0].scrollHeight);
     $('#log').css('background-color', '#f2dede');
   });
   $('#button').click(function(){
@@ -77,7 +80,6 @@ $(function(){
         });
     });
 });
-console.log( $('#text').val());  
     </script>
   </body>
 </html>
