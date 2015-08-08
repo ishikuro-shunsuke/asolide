@@ -14,8 +14,10 @@
         <div class="col-md-4">
           <h1>ASOLIDE</h1>
           <div id="editor" style="height: 300px;"></div>
-          <button type="button" class="btn btn-primary btn-lg btn-block" id="button">送信</button>
-          <textarea class="form-control" id="log" rows="20" disabled></textarea>
+          <button type="button" class="btn btn-primary btn-lg btn-block" id="button" data-toggle="collapse" data-target="#log" aria-expanded="false" aria-controls="log">
+            <span class="glyphicon glyphicon-play" id="icon"></span>
+          </button>
+          <textarea class="form-control collapse" id="log" rows="10" disabled></textarea>
         </div>
         <div class="col-md-4"></div>
       </div>
@@ -32,21 +34,26 @@ $(function(){
   var socket = io();
   socket.on('system', function (msg) {
     if (msg === 'Compiling') {
+      $('#button').removeAttr('data-toggle aria-controls');
       $('#button').removeClass('btn-primary');
       $('#button').addClass('btn-danger');
-      $('#button').val('再送信');
+      $('#icon').removeClass('glyphicon-play');
+      $('#icon').addClass('glyphicon-refresh');
     } else if (msg === 'Finished') {
       $('#button').removeClass('btn-danger');
       $('#button').addClass('btn-primary');
-      $('#button').val('送信');
+      $('#icon').removeClass('glyphicon-refresh');
+      $('#icon').addClass('glyphicon-play');
     }
     $('#log').append(msg + '\n');
   });
   socket.on('stdout', function (msg) {
     $('#log').append(msg + '\n');
+    $('#log').css('background-color', '#d9edf7');
   });
   socket.on('stderr', function (msg) {
     $('#log').append(msg + '\n');
+    $('#log').css('background-color', '#f2dede');
   });
   $('#button').click(function(){
     $.ajax({
