@@ -13,11 +13,12 @@ Simple IDE for demonstration
 ## Usage
 
 ```
-$ git clone https://github.com/ishikuro/asolide.git
-$ npm install
-$ bower install
-$ cp /path/to/mkproj-DE2_115.tcl resources/
-$ node app.js
+git clone https://github.com/ishikuro/asolide.git
+cd asolide/
+npm install
+bower install
+cp /path/to/mkproj-DE2_115.tcl resources/
+node app.js
 ```
 
 Open http://localhost:3000/
